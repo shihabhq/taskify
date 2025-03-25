@@ -1,6 +1,14 @@
-function App() {
+import { Container } from "@mui/material";
+import Navbar from "./components/Navbar";
+import Taskboard from "./pages/taskboard/Taskboard";
 
-  return <h1>Helllo</h1>;
+function App() {
+  return (
+    <Container>
+      <Navbar />
+      <Taskboard />
+    </Container>
+  );
 }
 
 export default App;

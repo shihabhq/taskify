@@ -3,7 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const loadAuth = () => {
   try {
     const auth = localStorage.getItem("auth");
-    return auth ? JSON.parse(auth) : { isLoggedIn: false, email: null };
+    if (auth) {
+      return JSON.parse(auth);
+    } else {
+      localStorage.setItem(
+        "auth",
+        JSON.stringify({ isLoggedIn: false, email: null })
+      );
+      return { isLoggedIn: false, email: null };
+    }
   } catch (error) {
     console.error("Failed to read auth:", error);
     return { isLoggedIn: false, email: null };

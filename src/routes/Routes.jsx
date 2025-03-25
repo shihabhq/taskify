@@ -1,6 +1,7 @@
+import { Route, Routes } from "react-router";
 import AuthPage from "../pages/auth/AuthPage";
-import Taskboard from "../pages/taskboard/Taskboard";
 import PrivateRoute from "./PrivateRoute";
+import App from "../App";
 
 const AllRoutes = () => {
   return (
@@ -10,7 +11,7 @@ const AllRoutes = () => {
         path="/"
         element={
           <PrivateRoute>
-            <Taskboard />
+            <App />
           </PrivateRoute>
         }
       />
