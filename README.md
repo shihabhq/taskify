@@ -24,7 +24,8 @@ Live Link: [Click here](https://taskify-tech.netlify.app/)
 
 ## dependencies used
 
-`   "dependencies": {
+```  
+"dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.8",
@@ -39,4 +40,4 @@ Live Link: [Click here](https://taskify-tech.netlify.app/)
     "react-router": "^7.4.0",
     "tailwindcss": "^4.0.15"
   },
-`
+```
