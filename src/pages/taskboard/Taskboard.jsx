@@ -5,7 +5,13 @@ import { Box } from "@mui/material";
 
 const Taskboard = () => {
   return (
-    <Box sx={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 8 }}>
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: { xs: "1fr", lg: "1fr 2fr" },
+        gap: 8,
+      }}
+    >
       <TaskInput />
       <TaskList />
     </Box>

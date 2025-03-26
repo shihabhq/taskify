@@ -37,6 +37,7 @@ const TaskInput = () => {
     };
 
     dispatch(addTask(newTask));
+    setTask("");
   };
 
   return (
