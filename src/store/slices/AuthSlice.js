@@ -39,7 +39,7 @@ const authSlice = createSlice({
   },
 });
 
-export const localStorageMiddleware = (store) => (next) => (action) => {
+export const localStorageAuthMiddleware = (store) => (next) => (action) => {
   const result = next(action);
 
   if (action.type?.includes("auth")) {

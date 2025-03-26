@@ -1,7 +1,40 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Fab, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
+import { CgDanger } from "react-icons/cg";
+import { IoWarningOutline } from "react-icons/io5";
+import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+import TaskCard from "./TaskListCard";
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const TaskList = () => {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <Box
       sx={{ height: "fit-content", padding: 3, borderRadius: 2, boxShadow: 1 }}
@@ -10,13 +43,58 @@ const TaskList = () => {
         Task List
       </Typography>
       <Box>
-        <Typography
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label="All" {...a11yProps(0)} />
+            <Tab
+              label={
+                <div className="flex items-center gap-1">
+                  <IoWarningOutline color="red" /> Hard
+                </div>
+              }
+              {...a11yProps(1)}
+            />
+            <Tab
+              label={
+                <div className="flex items-center gap-1">
+                  <CgDanger color="orange" /> Medium
+                </div>
+              }
+              {...a11yProps(2)}
+            />
+            <Tab
+              label={
+                <div className="flex items-center gap-1">
+                  <IoCheckmarkDoneCircleOutline color="green" /> Low
+                </div>
+              }
+              {...a11yProps(3)}
+            />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <TaskCard />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          High
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
+          Medium
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={3}>
+          Low
+        </CustomTabPanel>
+        {/* <Typography
           variant="body1"
           className="text-gray-600"
           sx={{ fontWeight: 500 }}
         >
           No task added yet
-        </Typography>
+        </Typography> */}
       </Box>
     </Box>
   );

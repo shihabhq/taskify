@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import tasksReducer from "./slices/TasksSlice";
-import authReducer, { localStorageMiddleware } from "./slices/AuthSlice";
+import tasksReducer, { localStorageTasksMiddleware } from "./slices/TasksSlice";
+import authReducer, { localStorageAuthMiddleware } from "./slices/AuthSlice";
 
 const store = configureStore({
   reducer: {
@@ -8,7 +8,10 @@ const store = configureStore({
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(localStorageMiddleware);
+    return getDefaultMiddleware().concat(
+      localStorageAuthMiddleware,
+      localStorageTasksMiddleware
+    );
   },
 });
 

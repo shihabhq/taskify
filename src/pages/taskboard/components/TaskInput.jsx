@@ -7,9 +7,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { nanoid } from "@reduxjs/toolkit";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../../store/slices/TasksSlice";
 
-const categories = ["General", "weather", "news", "sports", "entertainment"];
+const categories = ["General", "Outdoor", "News", "Sports", "Entertainment"];
 
 const priorities = ["High", "Medium", "Low"];
 
@@ -17,9 +20,20 @@ const TaskInput = () => {
   const [task, setTask] = useState("");
   const [category, setCategory] = useState("General");
   const [priority, setPriority] = useState("Medium");
+  const dispatch = useDispatch();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
+    const newTask = {
+      id: nanoid(),
+      date: new Date().toLocaleDateString(),
+      title: task,
+      priority,
+      category,
+    };
+
+    dispatch(addTask(newTask));
   };
 
   return (
@@ -32,7 +46,14 @@ const TaskInput = () => {
           <label className="font-medium" htmlFor="description">
             Task Description
           </label>
-          <TextField fullWidth id="description" required variant="outlined" />
+          <TextField
+            fullWidth
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+            id="description"
+            required
+            variant="outlined"
+          />
         </div>
         <div className="flex flex-col gap-0.5">
           <label className="font-medium" htmlFor="Select-category">
@@ -40,8 +61,9 @@ const TaskInput = () => {
           </label>
           <TextField
             id="Select-category"
+            value={category}
             select
-            defaultValue="weather"
+            onChange={(e) => setCategory(e.target.value)}
             fullWidth
             required
           >
@@ -58,8 +80,9 @@ const TaskInput = () => {
           </label>
           <TextField
             id="Select-priority"
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
             select
-            defaultValue="Medium"
             fullWidth
             required
           >
@@ -70,7 +93,11 @@ const TaskInput = () => {
             ))}
           </TextField>
         </div>
-        <Button type="submit" variant="contained" sx={{ fontWeight: 600, fontSize: 16 }}>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{ fontWeight: 600, fontSize: 16 }}
+        >
           Add Task
         </Button>
       </form>
