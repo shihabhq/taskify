@@ -6,12 +6,15 @@
  * title:'task title',
  * priority:'medium',
  * activity:{
- * text:"weather info or others"
+ * loading:false,
+ * error:'',
+ * info:{}
  * }
  * }
  */
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const loadTasks = () => {
   const tasks = JSON.parse(localStorage.getItem("tasks"));
@@ -26,9 +29,6 @@ const loadTasks = () => {
 const initialState = {
   tasks: loadTasks(),
 };
-//movies: https://jsonfakery.com/movies/random
-//books: https://www.googleapis.com/books/v1/volumes?q=love&startIndex=250&maxResults=1
-//http://api.weatherapi.com/v1/current.json?key=&q={location}&aqi=no
 
 const tasksSlice = createSlice({
   name: "tasks",
@@ -43,6 +43,12 @@ const tasksSlice = createSlice({
     removeTask: (state, action) => {
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
     },
+
+    //completed task persistency
+    toggleTask: (state, action) => {
+      const task = state.tasks.find((task) => task.id === action.payload.id);
+      task.completed = action.payload.completed;
+    },
   },
 });
 
@@ -56,6 +62,6 @@ export const localStorageTasksMiddleware = (store) => (next) => (action) => {
   return result;
 };
 
-export const { addTask, removeTask } = tasksSlice.actions;
+export const { addTask, removeTask, toggleTask } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

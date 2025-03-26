@@ -4,6 +4,7 @@ import { CgDanger } from "react-icons/cg";
 import { IoWarningOutline } from "react-icons/io5";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import TaskCard from "./TaskListCard";
+import { useSelector } from "react-redux";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -16,7 +17,11 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <div className="flex flex-col gap-4">{children}</div>
+        </Box>
+      )}
     </div>
   );
 }
@@ -30,6 +35,7 @@ function a11yProps(index) {
 
 const TaskList = () => {
   const [value, setValue] = React.useState(0);
+  const tasks = useSelector((state) => state.tasks.tasks);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -77,7 +83,9 @@ const TaskList = () => {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <TaskCard />
+          {tasks.map((task) => {
+            return <TaskCard taskData={task} key={task.id} />;
+          })}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           High

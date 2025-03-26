@@ -9,10 +9,15 @@ import {
 } from "@mui/material";
 import { nanoid } from "@reduxjs/toolkit";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTask } from "../../../store/slices/TasksSlice";
+import {
+  fetchBooks,
+  fetchMovies,
+  fetchWeather,
+} from "../../../store/slices/ActivitySlice";
 
-const categories = ["General", "Outdoor", "News", "Sports", "Entertainment"];
+const categories = ["General", "Outdoor", "Learning", "Movies"];
 
 const priorities = ["High", "Medium", "Low"];
 
@@ -22,11 +27,14 @@ const TaskInput = () => {
   const [priority, setPriority] = useState("Medium");
   const dispatch = useDispatch();
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
+    const id = nanoid();
+
     const newTask = {
-      id: nanoid(),
+      completed: false,
+      id,
       date: new Date().toLocaleDateString(),
       title: task,
       priority,
@@ -37,7 +45,9 @@ const TaskInput = () => {
   };
 
   return (
-    <Box sx={{ padding: 3, borderRadius: 2, boxShadow: 1 }}>
+    <Box
+      sx={{ padding: 3, borderRadius: 2, boxShadow: 1, height: "fit-content" }}
+    >
       <Typography variant="h5" fontWeight={600} mb={1}>
         Add New Task
       </Typography>
