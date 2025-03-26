@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
+
+import { fetchMovies } from "../../../store/slices/ActivitySlice";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBooks } from "../../../store/slices/ActivitySlice";
 import { Box, Typography } from "@mui/material";
 
-const Books = () => {
+const Movies = () => {
   const { loading, error, info } = useSelector((state) => state.activity);
   const disptach = useDispatch();
 
   useEffect(() => {
-    disptach(fetchBooks());
+    disptach(fetchMovies());
   }, [disptach]);
-
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -19,17 +19,17 @@ const Books = () => {
   return (
     <Box sx={{ p: 2, mt: 2, borderRadius: 2, border: "1px solid #e0e0e0" }}>
       <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-        Book recommendation
+        Movie recommendation
       </Typography>
       <Box display="flex flex-col" alignItems="center" gap={1}>
-        
-        <Typography>
-          {info.books?.title}
+        <Typography variant="body1">{info.movies?.title}</Typography>
+        <Typography variant="body1">
+          {" "}
+          Rating: {info.movies?.vote}/10{" "}
         </Typography>
-        <a href={info.books?.infoLink} className="hover:underline">Click to read</a>
       </Box>
     </Box>
   );
 };
 
-export default Books;
+export default Movies;

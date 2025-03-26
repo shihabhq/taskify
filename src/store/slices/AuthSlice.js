@@ -32,7 +32,7 @@ const authSlice = createSlice({
       state.status.email = action.payload.email;
     },
     //logout the user
-    useLogOut: (state) => {
+    userLogOut: (state) => {
       state.status.isLoggedIn = false;
       state.status.email = null;
     },
@@ -49,6 +49,6 @@ export const localStorageAuthMiddleware = (store) => (next) => (action) => {
   return result;
 };
 
-export const { useLogOut, userLogin } = authSlice.actions;
+export const { userLogOut, userLogin } = authSlice.actions;
 
 export default authSlice.reducer;

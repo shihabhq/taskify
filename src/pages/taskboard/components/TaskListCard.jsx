@@ -12,8 +12,10 @@ import { CgDanger } from "react-icons/cg";
 import { IoWarningOutline } from "react-icons/io5";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { toggleTask } from "../../../store/slices/TasksSlice";
+import { removeTask, toggleTask } from "../../../store/slices/TasksSlice";
 import Weather from "./Weather";
+import Books from "./Books";
+import Movies from "./Movies";
 
 const priorityStyles = {
   low: {
@@ -91,16 +93,24 @@ const TaskListCard = ({ taskData }) => {
 
         {/* Actions */}
         <Box>
-          <IconButton sx={{ color: "#000" }}>
-            <MdOutlineEdit />
-          </IconButton>
-          <IconButton sx={{ color: "#ff0041" }}>
+          <IconButton
+            onClick={() => dispatch(removeTask(id))}
+            sx={{ color: "#ff0041" }}
+          >
             <MdDelete />
           </IconButton>
         </Box>
       </Box>
 
-      {category === "Outdoor" ? <Weather /> : ""}
+      {category === "Outdoor" ? (
+        <Weather />
+      ) : category === "Learning" ? (
+        <Books />
+      ) : category === "Movies" ? (
+        <Movies />
+      ) : (
+        ""
+      )}
     </Card>
   );
 };

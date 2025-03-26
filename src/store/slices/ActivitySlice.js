@@ -4,7 +4,11 @@ import axios from "axios";
 const initialState = {
   loading: false,
   error: "",
-  info: {},
+  info: {
+    weather: null,
+    books: null,
+    movies: null,
+  },
 };
 
 //weather feching thunk
@@ -12,9 +16,7 @@ export const fetchWeather = createAsyncThunk(
   "activity/fetchWeather",
   async (location) => {
     const response = await axios.get(
-      `http://api.weatherapi.com/v1/current.json?key=${
-        import.meta.env.VITE_WEATHER_API_KEY
-      }&q=${location}&aqi=no`
+      `http://api.weatherapi.com/v1/current.json?key=53790b942c254faea0852454252603&q=${location}&aqi=no`
     );
     return response.data;
   }
@@ -48,7 +50,7 @@ const activitySlice = createSlice({
       })
       .addCase(fetchWeather.fulfilled, (state, action) => {
         state.loading = false;
-        state.info = action.payload.current;
+        state.info.weather = action.payload.current;
       })
       .addCase(fetchWeather.rejected, (state) => {
         state.loading = false;
@@ -59,7 +61,7 @@ const activitySlice = createSlice({
       })
       .addCase(fetchBooks.fulfilled, (state, action) => {
         state.loading = false;
-        state.info = action.payload.items[0].volumeInfo;
+        state.info.books = action.payload.items[0].volumeInfo;
       })
       .addCase(fetchBooks.rejected, (state) => {
         state.loading = false;
@@ -74,7 +76,7 @@ const activitySlice = createSlice({
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.loading = false;
-        state = {
+        state.info.movies = {
           title: action.payload.original_title,
           vote: action.payload.vote_average,
         };

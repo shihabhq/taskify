@@ -34,12 +34,7 @@ function a11yProps(index) {
 }
 
 const TaskList = () => {
-  const [value, setValue] = React.useState(0);
   const tasks = useSelector((state) => state.tasks.tasks);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <Box
@@ -49,60 +44,11 @@ const TaskList = () => {
         Task List
       </Typography>
       <Box>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab label="All" {...a11yProps(0)} />
-            <Tab
-              label={
-                <div className="flex items-center gap-1">
-                  <IoWarningOutline color="red" /> Hard
-                </div>
-              }
-              {...a11yProps(1)}
-            />
-            <Tab
-              label={
-                <div className="flex items-center gap-1">
-                  <CgDanger color="orange" /> Medium
-                </div>
-              }
-              {...a11yProps(2)}
-            />
-            <Tab
-              label={
-                <div className="flex items-center gap-1">
-                  <IoCheckmarkDoneCircleOutline color="green" /> Low
-                </div>
-              }
-              {...a11yProps(3)}
-            />
-          </Tabs>
-        </Box>
-        <CustomTabPanel value={value} index={0}>
+        <div className="flex flex-col gap-4">
           {tasks.map((task) => {
             return <TaskCard taskData={task} key={task.id} />;
           })}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          High
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
-          Medium
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={3}>
-          Low
-        </CustomTabPanel>
-        {/* <Typography
-          variant="body1"
-          className="text-gray-600"
-          sx={{ fontWeight: 500 }}
-        >
-          No task added yet
-        </Typography> */}
+        </div>
       </Box>
     </Box>
   );

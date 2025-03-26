@@ -9,13 +9,8 @@ import {
 } from "@mui/material";
 import { nanoid } from "@reduxjs/toolkit";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addTask } from "../../../store/slices/TasksSlice";
-import {
-  fetchBooks,
-  fetchMovies,
-  fetchWeather,
-} from "../../../store/slices/ActivitySlice";
 
 const categories = ["General", "Outdoor", "Learning", "Movies"];
 
